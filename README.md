@@ -21,7 +21,7 @@ yarn install
 
 ```bash
 # prisma init
-yarn prisma:dev
+yarn prisma:migrate-dev
 ```
 
 ## Running the server and frontend
