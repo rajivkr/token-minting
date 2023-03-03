@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserAccountType {
+  USER
+  OWNER
+}
+
+enum Chains {
+  BITCOIN
+  ETHEREUM
+  SOLANA
+  POLYGON
+  AVALANCHE
+  FANTOM
+  BSC
+}
+
+enum EntityStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum Networks {
+  MAINNET
+  TESTNET
+  KOVAN
+  GOERLI
+  MUMBAI
+  ROPSTEN
+  RINKEBY
+}
+
+model User {
+  id              String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  address         String
+  chain           Chains          @default(ETHEREUM)
+  network         Networks        @default(MAINNET)
+  status          EntityStatus    @default(ACTIVE)
+  account_type    UserAccountType @default(USER)
+  server_metadata Json?
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @default(now()) @updatedAt
+  Balances        Balances[]
+  Ledger          Ledger[]
+
+  @@map("users")
+}
+
+model Balances {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user         User     @relation(fields: [user_id], references: [id])
+  user_id      String   @db.Uuid
+  token_name   String
+  token_symbol String
+  balance      String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
+
+  @@unique([token_name, token_symbol, user_id])
+  @@index([user_id])
+  @@map("balances")
+}
+
+model Ledger {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user             User     @relation(fields: [user_id], references: [id])
+  user_id          String   @db.Uuid
+  receiver_address String
+  amount           String
+  txn_hash         String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now()) @updatedAt
+
+  @@index([user_id])
+  @@map("ledgers")
+}
