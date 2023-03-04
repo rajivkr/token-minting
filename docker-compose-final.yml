@@ -28,11 +28,11 @@ services:
     networks:
       - testnetwork
     depends_on:
-      db:
+      pgdb:
         condition: service_healthy
-  db:
+  pgdb:
     image: postgres:latest
-    container_name: db
+    container_name: pgdb
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}

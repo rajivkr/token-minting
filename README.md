@@ -1,9 +1,9 @@
 # Local Development
 
-## Database setup
+## Setup
 
 - Please change the `DATABASE_URL` in `.env` if you are running postgres seperately instead of docker.
-- Using values in `.env` (checking in as this is sample project, don't check any secret here)
+- Using values in `.env` (checking in as this is sample project, don't check-in any secret here)
 
 ## Bringing up the Database
 
