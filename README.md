@@ -1,17 +1,26 @@
-# Local Development
+# Token Minting
 
-## Setup
-
-- Please change the `DATABASE_URL` in `.env` if you are running postgres seperately instead of docker.
-- Using values in `.env` (checking in as this is sample project, don't check-in any secret here)
-
-## Bringing up the Database
+## Bringing the app in Prod mode using single command
 
 ```bash
 docker-compose up -d
 ```
 
-## Installation for both frontend & backend
+## OR
+
+## Local Development
+
+## Setup for database in docker if needed
+
+- Using values in `.env` (checking in as this is sample project, don't check-in any secret here)
+
+## Bringing up the dockerised postgres
+
+```bash
+docker-compose -f docker-compose-db-only up -d
+```
+
+## Installation for both frontend & backend after postgres setup for local development
 
 ```bash
 yarn install
@@ -24,7 +33,7 @@ yarn install
 yarn prisma:migrate-dev
 ```
 
-## Running the server and frontend
+## Running the server and frontend in watch mode
 
 ```bash
 yarn dev:all
