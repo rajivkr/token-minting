@@ -10,11 +10,9 @@ docker-compose up -d
 
 ## Local Development
 
-### Setup for database in docker if needed
-
 - Using values in `.env` (checking in as this is sample project, don't check-in any secret here)
 
-### Bringing up the dockerised postgres
+### Setup for database alone in docker if needed
 
 ```bash
 docker-compose -f docker-compose-db-only up -d
